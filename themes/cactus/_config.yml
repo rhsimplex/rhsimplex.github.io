@@ -5,7 +5,7 @@
 # Link to a page that gives an overview of all your projects.
 # This can be an external link (e.g., to you GitHub profile) or to another
 # page within your website.
-projects_url: /projects/
+projects_url: https://github.com/rhsimplex
 
 # Set the page direction to RTL or LTR. default is LTR. (if you set it 'rtl', the 'vazir' font will be loaded.)
 direction: ltr
@@ -17,7 +17,7 @@ nav:
   home: /
   Blog: /archives/
   Publications: /publications/
-  Projects: /projects/
+  Projects: https://github.com/rhsimplex/
   About: /about/
   CV: /cv/
 
