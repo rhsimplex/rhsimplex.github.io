@@ -17,7 +17,7 @@ nav:
   home: /
   Blog: /archives/
   Publications: /publications
-  Projects: https://github.com/rhsimplex/
+  # Projects: https://github.com/rhsimplex/
   About: /about
   # CV: /cv/
 
