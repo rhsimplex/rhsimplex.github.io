@@ -15,8 +15,8 @@ direction: ltr
 # languages/*.yml
 nav:
   home: /
-  Publications: /publications/
   Blog: /archives/
+  Publications: /publications/
   Projects: /projects/
   About: /about/
   CV: /cv/
