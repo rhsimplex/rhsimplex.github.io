@@ -16,9 +16,9 @@ direction: ltr
 nav:
   home: /
   Blog: /archives/
-  Publications: /publications/
+  Publications: /publications
   Projects: https://github.com/rhsimplex/
-  About: /about/
+  About: /about
   # CV: /cv/
 
 
