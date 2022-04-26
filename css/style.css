@@ -471,7 +471,7 @@ html {
   margin: 0;
   padding: 0;
   height: 100%;
-  border-top: 2px solid #c88d70;
+  border-top: 2px solid #f8ad8a;
   -webkit-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%;
 }
@@ -479,7 +479,7 @@ body {
   margin: 0;
   height: 100%;
   background-color: #223843;
-  color: #c88d70;
+  color: #f8ad8a;
   font-display: swap;
   font-weight: 400;
   font-size: 14px;
@@ -510,9 +510,9 @@ body {
   -webkit-hyphens: manual;
 }
 .content a {
-  color: #c88d70;
+  color: #f8ad8a;
   text-decoration: none;
-  background-image: linear-gradient(transparent, transparent 5px, #c88d70 5px, #c88d70);
+  background-image: linear-gradient(transparent, transparent 5px, #f8ad8a 5px, #f8ad8a);
   background-position: bottom;
   background-size: 100% 6px;
   background-repeat: repeat-x;
@@ -599,7 +599,7 @@ body {
 #header .h1 {
   margin-top: 0;
   margin-bottom: 0;
-  color: #c88d70;
+  color: #f8ad8a;
   letter-spacing: 0.01em;
   font-weight: 700;
   font-style: normal;
@@ -841,7 +841,7 @@ body {
   display: none;
 }
 #header-post #toc .toc-level-2 {
-  color: #c88d70;
+  color: #f8ad8a;
   font-size: 0.8rem;
 }
 #header-post #toc .toc-level-2:before {
@@ -1021,7 +1021,7 @@ body {
   display: none;
 }
 #footer-post #toc-footer .toc-level-2 {
-  color: #c88d70;
+  color: #f8ad8a;
   font-size: 0.8rem;
 }
 #footer-post #toc-footer .toc-level-2:before {
@@ -1326,14 +1326,14 @@ article .content .caption {
   text-align: center;
 }
 .pagination .page-number {
-  color: #c88d70;
+  color: #f8ad8a;
   font-size: 0.8rem;
 }
 .pagination a {
   padding: 4px 6px;
   border-radius: 5px;
   background-image: none;
-  color: #c88d70;
+  color: #f8ad8a;
   text-decoration: none;
 }
 .pagination a:hover {
@@ -1349,7 +1349,7 @@ article .content .caption {
   border: solid 1px #ccc;
   border-radius: 5px;
   background-color: #223843;
-  color: #c88d70;
+  color: #f8ad8a;
   font-size: 1.2rem;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
@@ -1366,7 +1366,7 @@ article .content .caption {
 }
 #search-result a.search-result-title {
   background-image: none;
-  color: #c88d70;
+  color: #f8ad8a;
   text-transform: capitalize;
   font-weight: bold;
   line-height: 1.2;
@@ -1386,7 +1386,7 @@ article .content .caption {
 .search-no-result {
   display: none;
   padding-bottom: 0.5em;
-  color: #c88d70;
+  color: #f8ad8a;
 }
 #tag-cloud .tag-cloud-title {
   color: #908d8d;
@@ -1419,7 +1419,7 @@ article .content .caption {
   word-wrap: break-word;
   white-space: pre;
   content: attr(aria-label);
-  background: #c88d70;
+  background: #f8ad8a;
   border-radius: 3px;
   opacity: 0;
 }
@@ -1429,7 +1429,7 @@ article .content .caption {
   display: none;
   width: 0;
   height: 0;
-  color: #c88d70;
+  color: #f8ad8a;
   pointer-events: none;
   content: '';
   border: 6px solid transparent;
@@ -1460,7 +1460,7 @@ article .content .caption {
   right: 50%;
   bottom: -7px;
   margin-right: -6px;
-  border-bottom-color: #c88d70;
+  border-bottom-color: #f8ad8a;
 }
 .tooltipped-sw::after {
   margin-right: -16px;
