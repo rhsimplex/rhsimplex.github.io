@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>R Henderson</title>
+  <icon>http://example.com/images/favicon-192x192.png</icon>
+  
+  <link href="http://example.com/atom.xml" rel="self"/>
+  
+  <link href="http://example.com/"/>
+  <updated>2022-04-27T14:28:30.887Z</updated>
+  <id>http://example.com/</id>
+  
+  <author>
+    <name>Ryan Henderson</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>The Cloud Credit Trap</title>
+    <link href="http://example.com/2022/04/26/cloud-credit-where-credit-is-due/"/>
+    <id>http://example.com/2022/04/26/cloud-credit-where-credit-is-due/</id>
+    <published>2022-04-26T15:07:27.000Z</published>
+    <updated>2022-04-27T14:28:30.887Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;I’m a big fan of &lt;a href=&quot;https://github.com/PyTorchLightning/pytorch-lightning&quot;&gt;PyTorch Lightning&lt;/a&gt; and use it &lt;a</summary>
+        
+      
+    
+    
+    
+    
+    <category term="ml" scheme="http://example.com/tags/ml/"/>
+    
+    <category term="mlops" scheme="http://example.com/tags/mlops/"/>
+    
+    <category term="aws" scheme="http://example.com/tags/aws/"/>
+    
+  </entry>
+  
+</feed>
