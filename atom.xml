@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>R Henderson</title>
-  <icon>http://example.com/themes/cactus/source/images/favicon-192x192.png</icon>
+  <icon>https://rhsimplex.github.io/themes/cactus/source/images/favicon-192x192.png</icon>
   
-  <link href="http://example.com/atom.xml" rel="self"/>
+  <link href="https://rhsimplex.github.io/atom.xml" rel="self"/>
   
-  <link href="http://example.com/"/>
-  <updated>2022-04-28T06:54:33.752Z</updated>
-  <id>http://example.com/</id>
+  <link href="https://rhsimplex.github.io/"/>
+  <updated>2022-04-28T07:01:19.534Z</updated>
+  <id>https://rhsimplex.github.io/</id>
   
   <author>
     <name>Ryan Henderson</name>
@@ -18,10 +18,10 @@
   
   <entry>
     <title>The Cloud Credit Trap</title>
-    <link href="http://example.com/2022/04/26/cloud-credit-where-credit-is-due/"/>
-    <id>http://example.com/2022/04/26/cloud-credit-where-credit-is-due/</id>
+    <link href="https://rhsimplex.github.io/2022/04/26/cloud-credit-where-credit-is-due/"/>
+    <id>https://rhsimplex.github.io/2022/04/26/cloud-credit-where-credit-is-due/</id>
     <published>2022-04-26T15:07:27.000Z</published>
-    <updated>2022-04-28T06:54:33.752Z</updated>
+    <updated>2022-04-28T07:01:19.534Z</updated>
     
     <content type="html"><![CDATA[<p>I’m a big fan of <a href="https://github.com/PyTorchLightning/pytorch-lightning">PyTorch Lightning</a> and use it <a href="https://github.com/bayer-science-for-a-better-life/molnet-geometric-lightning">whenever I can</a>. So I was excited to hear the Lightning creators were launching their own MLOps platform <a href="grid.ai">GridAI</a>. Unfortunately, through no fault of its creators, I will probably never use it.</p><h2 id="The-credit-trap"><a href="#The-credit-trap" class="headerlink" title="The credit trap"></a>The credit trap</h2><p>If I’m working at a big company and need MLOps, it’s unlikely that I’ll get permission to sign up for GridAI. I’ll probably be forced to use SageMaker or VertexAI, the AWS and GCP equivalents respectively. Fair enough – the company is big and established and so are the cloud providers they’re already using.</p><p>What’s counter-intuitive is that I’ll probably get the same outcome at a startup. Why? The cloud credit trap: that well-known Faustian lock-in every startup CTO will take to get their company $50-100k of free cloud stuff. Why on earth would they authorize me to start spending hundreds or thousands of dollars on GridAI when I could be spending zeros of dollars on Sagemaker for the “same thing?” They’ve traded curiosity&#x2F;risk for expedience, and are right to do so: I would do the same!</p><p><img src="/images/maxresdefault.jpg"><center><em>A skeptic tech lead listens intently to an AWS Startup Solutions Architect</em></center></p><h2 id="The-irony"><a href="#The-irony" class="headerlink" title="The irony"></a>The irony</h2><p>GridAI is <a href="https://www.grid.ai/billing-rates/">hosted on AWS</a>. But you can’t use those AWS cloud credits on GridAI.</p><p>It’s understandable. Imagine the nightmare of trying to apply AWS credits through billing from a third party. A cloud provider has no incentive to do that, especially if they want to push you towards <em>their</em> managed offering. </p><p>I’m not the first to point out this monopolistic quagmire. I just find this example – a company giving you free money to get hooked on their product while also collecting cloud rent from their competitor’s product – particularly twisted.</p><p>It’s hard to see a world where AWS or GCP would let cloud credits flow through to services built on their infrastructure. But one could imagine a less managed-service-oriented competitor explicitly encouraging this as a way to grow their overall customer base.</p><p>So who is the target user for something like GridAI? I want it to be me, but due to the cloud credit trap it’s hard to imagine a professional situation where I’d ever use it.</p>]]></content>
     
@@ -37,11 +37,11 @@
     
     
     
-    <category term="ml" scheme="http://example.com/tags/ml/"/>
+    <category term="ml" scheme="https://rhsimplex.github.io/tags/ml/"/>
     
-    <category term="mlops" scheme="http://example.com/tags/mlops/"/>
+    <category term="mlops" scheme="https://rhsimplex.github.io/tags/mlops/"/>
     
-    <category term="aws" scheme="http://example.com/tags/aws/"/>
+    <category term="aws" scheme="https://rhsimplex.github.io/tags/aws/"/>
     
   </entry>
   
