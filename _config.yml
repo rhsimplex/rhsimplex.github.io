@@ -115,6 +115,6 @@ feed:
   content: true
   content_limit_delim: ' '
   order_by: -date
-  icon: /images/favicon-192x192.png
+  icon: /themes/cactus/source/images/favicon-192x192.png
   autodiscovery: true
   template:
