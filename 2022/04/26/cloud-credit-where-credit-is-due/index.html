@@ -15,7 +15,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://rhsimplex.github.io/images/maxresdefault.jpg">
 <meta property="article:published_time" content="2022-04-26T15:07:27.000Z">
-<meta property="article:modified_time" content="2022-04-28T07:05:53.410Z">
+<meta property="article:modified_time" content="2022-04-29T19:44:48.934Z">
 <meta property="article:author" content="Ryan Henderson">
 <meta property="article:tag" content="ml">
 <meta property="article:tag" content="mlops">
@@ -155,7 +155,12 @@
     <p>I’m a big fan of <a target="_blank" rel="noopener" href="https://github.com/PyTorchLightning/pytorch-lightning">PyTorch Lightning</a> and use it <a target="_blank" rel="noopener" href="https://github.com/bayer-science-for-a-better-life/molnet-geometric-lightning">whenever I can</a>. So I was excited to hear the Lightning creators were launching their own MLOps platform <a href="grid.ai">GridAI</a>. Unfortunately, through no fault of its creators, I will probably never use it.</p>
 <h2 id="The-credit-trap"><a href="#The-credit-trap" class="headerlink" title="The credit trap"></a>The credit trap</h2><p>If I’m working at a big company and need MLOps, it’s unlikely that I’ll get permission to sign up for GridAI. I’ll probably be forced to use SageMaker or VertexAI, the AWS and GCP equivalents respectively. Fair enough – the company is big and established and so are the cloud providers they’re already using.</p>
 <p>What’s counter-intuitive is that I’ll probably get the same outcome at a startup. Why? The cloud credit trap: that well-known Faustian lock-in every startup CTO will take to get their company $50-100k of free cloud stuff. Why on earth would they authorize me to start spending hundreds or thousands of dollars on GridAI when I could be spending zeros of dollars on Sagemaker for the “same thing?” They’ve traded curiosity&#x2F;risk for expedience, and are right to do so: I would do the same!</p>
-<p><img src="/images/maxresdefault.jpg"><center><em>A skeptic tech lead listens intently to an AWS Startup Solutions Architect</em></center></p>
+<figure>
+  <img src="/images/maxresdefault.jpg" alt="A skeptical tech lead listens intently to an AWS Startup Solutions Architect"/>
+  <figcaption style="text-align: center"><em>A tech lead listens intently to an AWS Startup Solutions Architect</em></figcaption>
+</figure>
+
+
 <h2 id="The-irony"><a href="#The-irony" class="headerlink" title="The irony"></a>The irony</h2><p>GridAI is <a target="_blank" rel="noopener" href="https://www.grid.ai/billing-rates/">hosted on AWS</a>. But you can’t use those AWS cloud credits on GridAI.</p>
 <p>It’s understandable. Imagine the nightmare of trying to apply AWS credits through billing from a third party. A cloud provider has no incentive to do that, especially if they want to push you towards <em>their</em> managed offering. </p>
 <p>I’m not the first to point out this monopolistic quagmire. I just find this example – a company giving you free money to get hooked on their product while also collecting cloud rent from their competitor’s product – particularly twisted.</p>
