@@ -11,7 +11,10 @@ If I'm working at a big company and need MLOps, it's unlikely that I'll get perm
 
 What's counter-intuitive is that I'll probably get the same outcome at a startup. Why? The cloud credit trap: that well-known Faustian lock-in every startup CTO will take to get their company $50-100k of free cloud stuff. Why on earth would they authorize me to start spending hundreds or thousands of dollars on GridAI when I could be spending zeros of dollars on Sagemaker for the "same thing?" They've traded curiosity/risk for expedience, and are right to do so: I would do the same!
 
-![](/images/maxresdefault.jpg)<center>*A skeptic tech lead listens intently to an AWS Startup Solutions Architect*</center>
+<figure>
+  <img src="/images/maxresdefault.jpg" alt="A skeptical tech lead listens intently to an AWS Startup Solutions Architect"/>
+  <figcaption style="text-align: center"><em>A tech lead listens intently to an AWS Startup Solutions Architect</em></figcaption>
+</figure>
 
 
 ## The irony
