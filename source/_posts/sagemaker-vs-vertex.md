@@ -4,7 +4,8 @@ date: 2022-04-27 15:38:43
 tags: [mlops, aws, gcp]
 ---
 
-To ensure, ahem, *efficient* usage of [startup cloud credits](2022/04/26/cloud-credit-where-credit-is-due/index.html), I've recently completed a migration from GCP's MLOps platform [VertexAI](https://cloud.google.com/vertex-ai), to AWS's [SageMaker](https://docs.aws.amazon.com/sagemaker/latest/dg/whatis.html). I want to share with you my limited impressions of and gripes about each platform.
+
+To ensure, ahem, *efficient* usage of {% post_link cloud-credit-where-credit-is-due 'startup cloud credits' %}, I've recently completed a migration from GCP's MLOps platform [VertexAI](https://cloud.google.com/vertex-ai), to AWS's [SageMaker](https://docs.aws.amazon.com/sagemaker/latest/dg/whatis.html). I want to share with you my limited impressions of and gripes about each platform.
 
 ## Which is better? 
 
@@ -43,7 +44,8 @@ If you've written and containerized a training script, you probably have a Docke
 ENTRYPOINT ["python", "train.py"]
 ```
 
-That way, arguments (hyperparameters) you pass to the container are passed to the script directly. VertexAI does this -- correctly, in my opinion -- and SageMaker does not. Sagemaker instead drops a `hyperparameters.json` into your container while sending its own arguments to the container. So you might have to add something like this before your `train.py` script: 
+That way, arguments (hyperparameters) you pass to the container are passed to the script directly. VertexAI does this by default. I've since learned that Sagemaker [can also do this](https://github.com/aws/sagemaker-training-toolkit), but at wasn't obvious to me from the documentation (we'll discuss the docs in a bit). By default, Sagemaker drops a `hyperparameters.json` into your container while sending its own arguments to the container. So if you don't want to add another dependency to your build, you might have to add something like this before your `train.py` script:
+
 
 ```python
 if __name__ == '__main__':
@@ -70,7 +72,7 @@ if __name__ == '__main__':
     train(args)
 ```
 
-Another pitfall this example doesn't show is that while the Python `ArgumentParser` is capable of handling repeated arguments to make a sequence (for example: `--dataset dogs --dataset cats --dataset raccoons` could give you a `dataset: [dogs, cats, raccoons]`), since SageMaker is compressing them in to key value pairs in a JSON, you can't use this pattern. Naturally, it silently takes the last one.
+Another pitfall this example doesn't show is that while the Python `ArgumentParser` is capable of handling repeated arguments to make a sequence (for example: `--dataset dogs --dataset cats --dataset raccoons` could give you a `dataset: [dogs, cats, raccoons]`), since SageMaker send hyperparameters around in key value pairs in a JSON (or through a `dict` if you're using the Python SDK), you can't use this pattern.
 
 Both platforms will mount a storage volume (S3 or GCS bucket) with your training data. So here you can either supply your training script with these paths or if you're lazy like me, just copy everything to the directory you expect it to be.
 
@@ -83,7 +85,7 @@ elif os.path.isdir('/opt/ml/input/data/'):
     ...
 ```
 
-Similarly, both platform provide a mounted directory to send model artifacts to (like checkpoints and logs). Both S3 and GCS have nice `rsync`-like functionality so you can download what you need after training. SageMaker compresses everything in your artifact directory before storing it. This sounds like a good idea, but is very annoying if you just want to download, say, the Tensorboard logs without a massive model checkpoint.
+Similarly, both platform provide a mounted directory to send model artifacts to (like checkpoints and logs). Both S3 and GCS have nice `rsync`-like functionality so you can download what you need after training. SageMaker compresses everything in your artifact directory before storing it. This sounds like a good idea, but is very annoying if you just want to download, say, the Tensorboard logs without a massive model checkpoint. SageMaker also doesn't allow you to SSH into a running training container as far as I can tell, and VertexAI does (but it's not enabled by default).
 
 ## Hyperparameter tuning
 
@@ -91,7 +93,7 @@ If you're tuning hyperparameters, you need some way to send validation results f
 
 The Vertex HPS supports [conditional hyperparemeters](https://cloud.google.com/vertex-ai/docs/training/hyperparameter-tuning-overview) and SageMaker, as far as I can see, does not. A conditional hyperparameter just means the hyperparameter will only be tuned if some condition is met. For instance, you may want to tune models on an L2 or smooth L1 loss, and in the latter case you would want to also tune the alpha parameter. In SageMaker this is not possible, and the alpha parameter will be "tuned" even when using L2 loss.
 
-Neither supports [pruning jobs](https://optuna.readthedocs.io/en/v1.0.0/tutorial/pruning.html).
+Neither supports [pruning jobs](https://optuna.readthedocs.io/en/v1.0.0/tutorial/pruning.html) that I can see, which is a shame because it could potentially save you a lot of money.
 
 ## Tensorboard integration
 
@@ -103,16 +105,17 @@ SageMaker [has a Tensorboard integration as well](https://sagemaker.readthedocs.
 
 ## Notebooks
 
-Both platforms use a customized JupyterLab setup for notebooks, so you will hopefully be on familiar territory here. Notably, the VertexAI instances seem to persist the conda environments between sessions, while SageMaker resets them. Both are valid design choices in my opinion.  If you want to run some setup code for setup code on SageMaker to recreate your environment, you can [easily do so](https://docs.aws.amazon.com/sagemaker/latest/dg/notebook-lifecycle-config.html).
+Both platforms use a customized JupyterLab setup for notebooks, so you will hopefully be on familiar territory here. Notably, the VertexAI instances seem to persist the conda environments between sessions, while SageMaker resets them. Both are valid design choices in my opinion.  If you want to run some setup code for setup code on SageMaker to recreate your environment, you can [easily do so](https://docs.aws.amazon.com/sagemaker/latest/dg/notebook-lifecycle-config.html) -- however I don't know a good way to integrate these setup scripts with the source control system of your choice.
 
 I couldn't find an elegant way to integrate an external Git repository in either case. I ended up adding an SSH to each notebook instance I wanted to use my code in.
 
 ## GUI
 
-This will largely be a matter of taste, but the AWS UI is in general more polished and logical than GCP. Browsing logs in particular seems weirdly complicated on GCP. Also filtering (e.g. training jobs, of which you may have thousands) in Vertex only works from the beginning of the name while  
+This will largely be a matter of taste, but the AWS UI is in general more polished and logical than GCP. Browsing logs in particular seems weirdly complicated on GCP. Also filtering (e.g. training jobs, of which you may have thousands) in Vertex only works from the beginning of the name while the SageMaker does a full-text search. 
 
 ## Documentation
 
+The platform-level docs for both are both a bit overwhelming but complete. If anything SageMaker has too much documentation to search through effectively. There are probably [thousands of Jupyter notebooks](https://github.com/aws/amazon-sagemaker-examples) that show you how to do everything you could possibly want. I personally don't like having to search through these as documentation, but I appreciate the commitment to providing working examples for nearly every functionality. 
 Sagemaker: many notebooks, tough to sort through
 
 ## Vertex AI
