@@ -1,42 +1,41 @@
 ---
 title: SageMaker vs Vertex in early 2022
-date: 2022-04-27 15:38:43
+date: 2022-05-05 15:38:43
 tags: [mlops, aws, gcp]
 ---
 
 
-To ensure, ahem, *efficient* usage of {% post_link cloud-credit-where-credit-is-due 'startup cloud credits' %}, I've recently completed a migration from GCP's MLOps platform [VertexAI](https://cloud.google.com/vertex-ai), to AWS's [SageMaker](https://docs.aws.amazon.com/sagemaker/latest/dg/whatis.html). I want to share with you my limited impressions of and gripes about each platform.
+To ensure, ahem, *efficient* usage of {% post_link cloud-credit-where-credit-is-due 'startup cloud credits' %}, I've recently completed a machine learning platform migration from Google's [VertexAI](https://cloud.google.com/vertex-ai), to Amazon's [SageMaker](https://docs.aws.amazon.com/sagemaker/latest/dg/whatis.html). I want to share my limited impressions about each platform.
 
 ## Which is better? 
 
-VertexAI is clunkier to use, but feels more "correct" in a software-engineering sense. SageMaker is more straight-forward for a technical user without much software engineering background -- the archetypical data scientist -- but has some anti-patterns that make integration irritating.
+VertexAI is clunkier to use, but feels more "correct" in a software-engineering sense. SageMaker is more straight-forward for a technical user without much software engineering background -- the archetypical data scientist -- but has some anti-patterns that make integration a bit more treacherous.
 
 ## Context
 
-I did the migration in early 2022.   My use case is so far managing neural network training, in particular hyperparameter optimization. I have a CI pipeline that builds and tests the model code and pushes a container image to the platforms' respective container registries. Most of the model code is PyTorch.
+I did the migration in early 2022.   My use case is training neural networks, and in particular hyperparameter optimization. I have a CI pipeline (outside of AWS or GCP) that builds and tests the model code and pushes a container image to the platforms' respective container registries. Most of the model code is PyTorch.
 
-I don't want to pretend to have covered everything these platforms offer. To summarize:
+I don't want to pretend to have covered everything these platforms offer, which is a lot. To summarize I have, a bit of experience on each platform with:
 
-Have experience:
-* Training with container images
+* Containerized Training 
 * Hyperparameter searches
-* Notebooks
+* Jupyter notebooks
 * S3/GCS integration
 
-Didn't try yet:
+And a non-exhaustive list of things I haven't used yet:
 * Model deployment/lifecycle
 * Data pipelines
 * Auto ML
 
 ## What they have in common
 
-I haven't worked with cloud ML platforms in a few years, and I'm happy to say they've come a long way. Both SageMaker and VertexAI do what I expected with only minor headaches.Both apply a markup to compute resources used for training (e.g. the training instance used on SageMaker will cost more per hour than the same instance on EC2), and naturally it's not at all clear what percentage this is or if it's stable over time.
+I haven't worked with cloud ML platforms in a few years, and I'm happy to say they've come a long way. Both SageMaker and VertexAI do what I expected with only minor headaches. Both apply a cost markup to compute resources used for training (e.g. the training instance used on SageMaker will cost more per hour than the same instance on EC2), and unfortunately it's not at clear what percentage this is or if it's stable over time. VertexAI has a slight edge here because you can choose your accelerator, i.e. GPU, separately from the base instance. In SageMaker, they're lumped together.
 
-One surprising annoyance is the UI for either can be very slow. I try to use the CLI or write my on scripts with the respective SDKs, but I would expect one of the advantages of using a MLOps platform 
+One surprising annoyance is the UI for either can be very slow--surprisingly, frustratingly slow. I try to use the CLI or write my own scripts with the respective SDKs, but I would expect one of the advantages of using a platform like SageMaker or VertexAI would be the slick, informative UI. Sadly, this isn't the case. 
 
 ## How much will I need to change my training code?
 
-Ideally, if you structure your code cleanly, you should not have to modify it at all to integrate into a machine learning platform. Unfortunately, this is not the case with SageMaker or VertexAI, but SageMaker is much worse in this respect. 
+In an ideal world, you should not have to modify your training code at all to integrate it into a machine learning platform. This is not the case with SageMaker or VertexAI, but SageMaker is a bit worse in this respect. 
 
 If you've written and containerized a training script, you probably have a Dockerfile that ends with something like:
 
@@ -44,7 +43,7 @@ If you've written and containerized a training script, you probably have a Docke
 ENTRYPOINT ["python", "train.py"]
 ```
 
-That way, arguments (hyperparameters) you pass to the container are passed to the script directly. VertexAI does this by default. I've since learned that Sagemaker [can also do this](https://github.com/aws/sagemaker-training-toolkit), but at wasn't obvious to me from the documentation (we'll discuss the docs in a bit). By default, Sagemaker drops a `hyperparameters.json` into your container while sending its own arguments to the container. So if you don't want to add another dependency to your build, you might have to add something like this before your `train.py` script:
+That way, arguments (hyperparameters) you pass to the container are passed to the script directly. VertexAI does this by default. I've since learned that Sagemaker [can also do this](https://github.com/aws/sagemaker-training-toolkit), but that wasn't initially obvious to me from the sprawling documentation. By default, Sagemaker drops a `hyperparameters.json` into your container while sending its own arguments to the container. So if you don't want to add another dependency to your build, you might have to add something like this before your `train.py` script:
 
 
 ```python
@@ -97,30 +96,28 @@ Neither supports [pruning jobs](https://optuna.readthedocs.io/en/v1.0.0/tutorial
 
 ## Tensorboard integration
 
-Vertex AI has a nice tensorboard integration that is [kind of a pain](https://cloud.google.com/vertex-ai/docs/experiments/tensorboard-training) to set up but works pretty well once it's running. Just make sure you configure the mysterious service account correctly. Oh, and I hope you're ok with the [**absurd $300 per user per month cost**](https://cloud.google.com/vertex-ai/pricing#tensorboard). Ever buy a Coke in a strip club only to find out it cost $300 when you try to leave? No reason.
+Vertex AI has a nice tensorboard integration that is [kind of a pain](https://cloud.google.com/vertex-ai/docs/experiments/tensorboard-training) to set up but works pretty well once it's running. Just make sure you configure the mysterious service account correctly. Oh, and I hope you're ok with the [**absurd $300 per user per month cost**](https://cloud.google.com/vertex-ai/pricing#tensorboard).
 
-Anyway, hope you don't need precision-recall curves. Even though Tensorboard can generate PR curves, the VertexAI version mysteriously doesn't support them (as of January 2022). Of course, I'm only assuming that's the case since my PR-curves render correctly when serving Tensorboard locally. I couldn't find any information about which version of Tensorboard the VertexAI platform runs or any differences between the VertexAI vs. vanilla Tensorboard. Considering Tensorboard is created by Google, this is pretty puzzling.
+Even though Tensorboard can generate PR curves, the VertexAI version mysteriously doesn't support them (as of January 2022). Of course, I'm only assuming that's the case since my PR-curves render correctly when serving Tensorboard locally. I couldn't find any information about which version of Tensorboard the VertexAI platform runs or any differences between the VertexAI vs. vanilla Tensorboard. Considering Tensorboard is created by Google, this is pretty puzzling.
 
 SageMaker [has a Tensorboard integration as well](https://sagemaker.readthedocs.io/en/stable/amazon_sagemaker_debugger.html?highlight=tensorboard#capture-real-time-tensorboard-data-from-the-debugging-hook), but I have not managed to get this working yet. I will update this section if I ever do. Tensorboard can take an [S3 URI directly](https://stackoverflow.com/questions/47425882/tensorboard-logdir-with-s3-path) which is pretty cool, but as I mentioned above, SageMaker is compressing your model artifacts, so this doesn't work out of the box.
 
 ## Notebooks
 
-Both platforms use a customized JupyterLab setup for notebooks, so you will hopefully be on familiar territory here. Notably, the VertexAI instances seem to persist the conda environments between sessions, while SageMaker resets them. Both are valid design choices in my opinion.  If you want to run some setup code for setup code on SageMaker to recreate your environment, you can [easily do so](https://docs.aws.amazon.com/sagemaker/latest/dg/notebook-lifecycle-config.html) -- however I don't know a good way to integrate these setup scripts with the source control system of your choice.
+Both platforms use a customized JupyterLab setup for notebooks, so you will hopefully be on familiar territory here. Notably, the VertexAI instances seem to persist the conda environments between sessions, while SageMaker resets them. Both are valid design choices in my opinion.  If you want to run some setup code for SageMaker to recreate your environment, you can [easily do so](https://docs.aws.amazon.com/sagemaker/latest/dg/notebook-lifecycle-config.html).
 
-I couldn't find an elegant way to integrate an external Git repository in either case. I ended up adding an SSH to each notebook instance I wanted to use my code in.
+However, I couldn't find an elegant way to integrate an external Git repository in either case. I ended up adding an SSH key to each notebook instance on which I wanted to pull code with Git.
 
 ## GUI
 
-This will largely be a matter of taste, but the AWS UI is in general more polished and logical than GCP. Browsing logs in particular seems weirdly complicated on GCP. Also filtering (e.g. training jobs, of which you may have thousands) in Vertex only works from the beginning of the name while the SageMaker does a full-text search. 
+This will largely be a matter of taste, but the AWS UI is in general more polished and logical than GCP. Browsing logs in particular seems weirdly complicated on GCP. Also filtering (e.g. training jobs, of which you may have thousands) in Vertex only works from the beginning of the name while the SageMaker does a full-text search. As I said above, both GUIs are pretty uninspired.
 
 ## Documentation
 
-The platform-level docs for both are both a bit overwhelming but complete. If anything SageMaker has too much documentation to search through effectively. There are probably [thousands of Jupyter notebooks](https://github.com/aws/amazon-sagemaker-examples) that show you how to do everything you could possibly want. I personally don't like having to search through these as documentation, but I appreciate the commitment to providing working examples for nearly every functionality. 
-Sagemaker: many notebooks, tough to sort through
+The platform-level docs for both platforms are a bit overwhelming but complete. If anything SageMaker has too much documentation to search through effectively. There are probably [thousands of Jupyter notebooks](https://github.com/aws/amazon-sagemaker-examples) that show you how to do everything you could possibly want. I personally don't like having to search through these as documentation, but I appreciate the commitment to providing working examples for nearly every functionality. 
 
-## Vertex AI
-* bad filtering
-* irritating logging
+The SDK documentation [is a lot better for SageMaker](https://sagemaker.readthedocs.io/en/stable/); someone actually cared to organize this and make it readable. The [VertexAI counterpart](https://googleapis.dev/python/aiplatform/latest/aiplatform.html) is probably autogenerated and will require some work to get your bearings.
 
-## sagemaker
-* accelerator and instances combined
+## Conclusion
+
+Both VertexAI and SageMaker are much more than MLOps platforms, which can be a blessing for some but a curse for others. They seem to be trying to cover every ML use-case and every kind of user, which can add friction if you have a very specific idea of what you want to accomplish.
