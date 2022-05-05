@@ -36,3 +36,12 @@ For the most up-to-date publication information, see my [Google Scholar Profile]
 ## PyData 2016
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/DfWLBzArzKE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+# Doctoral dissertation
+
+* [A Cavalcade of Clusters: The Interplay Between Atomic And Electronic Structure In Complex Intermetallics](https://hdl.handle.net/1813/33790)
+
+# ...and my most cited work of all time, a blockchain whitepaper...
+
+* [BigchainDB: a scalable blockchain database](https://scholar.google.com/citations?view_op=view_citation&hl=en&citation_for_view=4Wr_OxcAAAAJ:2osOgNQ5qMEC)
+
