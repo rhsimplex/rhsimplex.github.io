@@ -3,6 +3,9 @@ title: The Lost 4-Dimensional Rotation
 date: 2022-05-09 09:29:41
 tags: [math, geometry]
 ---
+
+Update: [r/math discussion](https://www.reddit.com/r/math/comments/unbeue/the_lost_4dimensional_rotation/)
+
 Occasionally, an article about the Fourth Dimension pops up on Hacker News. For instance, [The Fourth dimension: Toward a geometry of higher reality (1984)](https://news.ycombinator.com/item?id=30368840) submitted February 2022.
 
 In the spirit of the classic [Flatland](http://www.geom.uiuc.edu/~banchoff/Flatland/), such articles usually try to give an intuitive sense of higher-dimensional space through 2D or 3D analogy, eschewing a more mathematical approach. Here I'll try to do the opposite. I'll use a little math to show something I find very unintuitive about 4D that rarely comes up: that an object in 4D can spin around two perpendicular axes at the same time.
