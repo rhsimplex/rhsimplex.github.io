@@ -138,6 +138,8 @@ Now we have the totally new rotation! It has no precedent in 2 or 3 dimensions. 
 
 ## Conclusion
 
-So why was our analogy of a wheel with an extra axle stuck through it unsatisfying? Because not only are the axes perpendicular, the planes of rotation are as well. Since you can't have two perpendicular planes in 3D, our intuition -- and by extension the analogy -- fails.
+So why was our analogy of a wheel with an extra axle stuck through it unsatisfying? Because not only are the axes perpendicular, the planes of rotation are as well. That's two axes and two planes that need to be mutually perpendicular, and you just can't have four perpendicular vectors in 3D so our intuition -- and by extension the analogy -- fails.
 
 If you want to read more about why I was getting into this back in 2008, feel free to jump to [Appendix C of my doctoral dissertation](https://hdl.handle.net/1813/33790) to learn about the character table of the [600 cell](https://en.wikipedia.org/wiki/600-cell).
+
+Thanks to [u/frustrated-nerd](https://www.reddit.com/r/math/comments/unbeue/the_lost_4dimensional_rotation/i870yin/) for pointing out an error in my original post.
