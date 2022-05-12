@@ -136,7 +136,7 @@ Now we have the totally new rotation! It has no precedent in 2 or 3 dimensions. 
 
 <figure>
   <img src="/images/rotations.png" alt="2D, 3D, and 4D rotations."/>
-  <figcaption style="text-align: center"><em>In the 4D rotation, you can rotate about two perpendicular planes. The axis of each rotation likes in the plane of the other. Here w denotes the new dimension.</em></figcaption>
+  <figcaption style="text-align: center"><em>In the 4D rotation, you can rotate about two orthogonal planes. The axis of each rotation likes in the plane of the other. Here w denotes the new dimension.</em></figcaption>
 </figure>
 
 ## Conclusion
