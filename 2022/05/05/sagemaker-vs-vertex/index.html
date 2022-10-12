@@ -14,7 +14,7 @@
 <meta property="og:description" content="To ensure, ahem, efficient usage of startup cloud credits, I’ve recently completed a machine learning platform migration from Google’s VertexAI, to Amazon’s SageMaker. I want to share my limited impre">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-05-05T15:38:43.000Z">
-<meta property="article:modified_time" content="2022-06-15T13:43:48.473Z">
+<meta property="article:modified_time" content="2022-10-12T07:04:44.525Z">
 <meta property="article:author" content="Ryan Henderson">
 <meta property="article:tag" content="mlops">
 <meta property="article:tag" content="aws">
@@ -58,7 +58,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.2.0"></head>
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head>
 
 <body class="max-width mx-auto px3 ltr">
     
@@ -161,7 +161,7 @@
   
 
   <div class="content" itemprop="articleBody">
-    <p>To ensure, ahem, <em>efficient</em> usage of <a href="/2022/04/26/cloud-credit-where-credit-is-due/" title="startup cloud credits">startup cloud credits</a>, I’ve recently completed a machine learning platform migration from Google’s <a target="_blank" rel="noopener" href="https://cloud.google.com/vertex-ai">VertexAI</a>, to Amazon’s <a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/sagemaker/latest/dg/whatis.html">SageMaker</a>. I want to share my limited impressions about each platform.</p>
+    <p>To ensure, ahem, <em>efficient</em> usage of <a href="/2022/04/26/cloud-credit-where-credit-is-due/" title="The Cloud Credit Trap">startup cloud credits</a>, I’ve recently completed a machine learning platform migration from Google’s <a target="_blank" rel="noopener" href="https://cloud.google.com/vertex-ai">VertexAI</a>, to Amazon’s <a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/sagemaker/latest/dg/whatis.html">SageMaker</a>. I want to share my limited impressions about each platform.</p>
 <h2 id="Which-is-better"><a href="#Which-is-better" class="headerlink" title="Which is better?"></a>Which is better?</h2><p>VertexAI is clunkier to use, but feels more “correct” in a software-engineering sense. SageMaker is more straight-forward for a technical user without much software engineering background – the archetypical data scientist – but has some anti-patterns that make integration a bit more treacherous.</p>
 <h2 id="Context"><a href="#Context" class="headerlink" title="Context"></a>Context</h2><p>I did the migration in early 2022.   My use case is training neural networks, and in particular hyperparameter optimization. I have a CI pipeline (outside of AWS or GCP) that builds and tests the model code and pushes a container image to the platforms’ respective container registries. Most of the model code is PyTorch.</p>
 <p>I don’t want to pretend to have covered everything these platforms offer, which is a lot. To summarize I have, a bit of experience on each platform with:</p>
