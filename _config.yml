@@ -3,9 +3,16 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: R Henderson
+title: Ryan Henderson
 subtitle: ''
-description: 'Scientist, ML Researcher, Developer'
+description: >
+  Hi there!
+  My name is Ryan Henderson, and I'm a PhD-trained chemist living near Berlin, Germany.
+  I'm a machine learning research scientist working on biological/chemical problems.
+  I also have experience in backend development, numerical programming, explainable AI, and machine learning applied to other fields.
+
+
+  See my <a href="/publications">publications</a> or blog posts for more info.
 keywords:
 author: Ryan Henderson
 language: en

@@ -15,10 +15,9 @@ direction: ltr
 # languages/*.yml
 nav:
   home: /
-  Blog: /archives/
   Publications: /publications
   # Projects: https://github.com/rhsimplex/
-  About: /about
+  Blog Archives: /archives/
   Stats: https://counter.dev/dashboard.html?user=rhsimplex&token=I4C7xZmOptOztu7l
   # CV: /cv/
 
@@ -31,7 +30,7 @@ social_links:
   github: http://github.com/rhsimplex
   # twitter: /
   # facebook: /
-  # linkedin: /
+  linkedin: https://www.linkedin.com/in/hendersonry/
   mail: mailto:hendersonry@gmail.com
 
 # Customize the overview with displaying a tagcloud on the index page.
