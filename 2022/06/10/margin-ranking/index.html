@@ -9,20 +9,20 @@
     <meta name="description" content="Classification vs. Regression: the ultimate dichotomy in machine learning? It’s often presented this way, but I’ve found that many real-world problems are not so clear-cut. Often you want to predict t">
 <meta property="og:type" content="article">
 <meta property="og:title" content="A Neural Network Trick for Ranking Problems">
-<meta property="og:url" content="https://rhsimplex.github.io/2022/06/10/margin-ranking/index.html">
+<meta property="og:url" content="https://henders.one/2022/06/10/margin-ranking/index.html">
 <meta property="og:site_name" content="Ryan Henderson">
 <meta property="og:description" content="Classification vs. Regression: the ultimate dichotomy in machine learning? It’s often presented this way, but I’ve found that many real-world problems are not so clear-cut. Often you want to predict t">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://rhsimplex.github.io/images/wine_quality_hist.svg">
-<meta property="og:image" content="https://rhsimplex.github.io/images/wine_model_comparison.svg">
-<meta property="og:image" content="https://rhsimplex.github.io/images/margin_ranging_-1.svg">
-<meta property="og:image" content="https://rhsimplex.github.io/images/margin_ranging_0.svg">
-<meta property="og:image" content="https://rhsimplex.github.io/images/margin_ranging_1.svg">
+<meta property="og:image" content="https://henders.one/images/wine_quality_hist.svg">
+<meta property="og:image" content="https://henders.one/images/wine_model_comparison.svg">
+<meta property="og:image" content="https://henders.one/images/margin_ranging_-1.svg">
+<meta property="og:image" content="https://henders.one/images/margin_ranging_0.svg">
+<meta property="og:image" content="https://henders.one/images/margin_ranging_1.svg">
 <meta property="article:published_time" content="2022-06-10T09:29:32.000Z">
-<meta property="article:modified_time" content="2022-12-05T20:10:19.307Z">
+<meta property="article:modified_time" content="2022-12-06T16:26:58.539Z">
 <meta property="article:author" content="Ryan Henderson">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://rhsimplex.github.io/images/wine_quality_hist.svg">
+<meta name="twitter:image" content="https://henders.one/images/wine_quality_hist.svg">
     
     
       
@@ -101,17 +101,17 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://rhsimplex.github.io/2022/06/10/margin-ranking/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://rhsimplex.github.io/2022/06/10/margin-ranking/&text=A Neural Network Trick for Ranking Problems"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://rhsimplex.github.io/2022/06/10/margin-ranking/&title=A Neural Network Trick for Ranking Problems"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://rhsimplex.github.io/2022/06/10/margin-ranking/&is_video=false&description=A Neural Network Trick for Ranking Problems"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=A Neural Network Trick for Ranking Problems&body=Check out this article: https://rhsimplex.github.io/2022/06/10/margin-ranking/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://rhsimplex.github.io/2022/06/10/margin-ranking/&title=A Neural Network Trick for Ranking Problems"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://rhsimplex.github.io/2022/06/10/margin-ranking/&title=A Neural Network Trick for Ranking Problems"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://rhsimplex.github.io/2022/06/10/margin-ranking/&title=A Neural Network Trick for Ranking Problems"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://rhsimplex.github.io/2022/06/10/margin-ranking/&title=A Neural Network Trick for Ranking Problems"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://rhsimplex.github.io/2022/06/10/margin-ranking/&name=A Neural Network Trick for Ranking Problems&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://rhsimplex.github.io/2022/06/10/margin-ranking/&t=A Neural Network Trick for Ranking Problems"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://henders.one/2022/06/10/margin-ranking/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://henders.one/2022/06/10/margin-ranking/&text=A Neural Network Trick for Ranking Problems"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://henders.one/2022/06/10/margin-ranking/&title=A Neural Network Trick for Ranking Problems"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://henders.one/2022/06/10/margin-ranking/&is_video=false&description=A Neural Network Trick for Ranking Problems"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=A Neural Network Trick for Ranking Problems&body=Check out this article: https://henders.one/2022/06/10/margin-ranking/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://henders.one/2022/06/10/margin-ranking/&title=A Neural Network Trick for Ranking Problems"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://henders.one/2022/06/10/margin-ranking/&title=A Neural Network Trick for Ranking Problems"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://henders.one/2022/06/10/margin-ranking/&title=A Neural Network Trick for Ranking Problems"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://henders.one/2022/06/10/margin-ranking/&title=A Neural Network Trick for Ranking Problems"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://henders.one/2022/06/10/margin-ranking/&name=A Neural Network Trick for Ranking Problems&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://henders.one/2022/06/10/margin-ranking/&t=A Neural Network Trick for Ranking Problems"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -239,17 +239,17 @@
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://rhsimplex.github.io/2022/06/10/margin-ranking/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://rhsimplex.github.io/2022/06/10/margin-ranking/&text=A Neural Network Trick for Ranking Problems"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://rhsimplex.github.io/2022/06/10/margin-ranking/&title=A Neural Network Trick for Ranking Problems"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://rhsimplex.github.io/2022/06/10/margin-ranking/&is_video=false&description=A Neural Network Trick for Ranking Problems"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=A Neural Network Trick for Ranking Problems&body=Check out this article: https://rhsimplex.github.io/2022/06/10/margin-ranking/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://rhsimplex.github.io/2022/06/10/margin-ranking/&title=A Neural Network Trick for Ranking Problems"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://rhsimplex.github.io/2022/06/10/margin-ranking/&title=A Neural Network Trick for Ranking Problems"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://rhsimplex.github.io/2022/06/10/margin-ranking/&title=A Neural Network Trick for Ranking Problems"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://rhsimplex.github.io/2022/06/10/margin-ranking/&title=A Neural Network Trick for Ranking Problems"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://rhsimplex.github.io/2022/06/10/margin-ranking/&name=A Neural Network Trick for Ranking Problems&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://rhsimplex.github.io/2022/06/10/margin-ranking/&t=A Neural Network Trick for Ranking Problems"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://henders.one/2022/06/10/margin-ranking/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://henders.one/2022/06/10/margin-ranking/&text=A Neural Network Trick for Ranking Problems"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://henders.one/2022/06/10/margin-ranking/&title=A Neural Network Trick for Ranking Problems"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://henders.one/2022/06/10/margin-ranking/&is_video=false&description=A Neural Network Trick for Ranking Problems"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=A Neural Network Trick for Ranking Problems&body=Check out this article: https://henders.one/2022/06/10/margin-ranking/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://henders.one/2022/06/10/margin-ranking/&title=A Neural Network Trick for Ranking Problems"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://henders.one/2022/06/10/margin-ranking/&title=A Neural Network Trick for Ranking Problems"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://henders.one/2022/06/10/margin-ranking/&title=A Neural Network Trick for Ranking Problems"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://henders.one/2022/06/10/margin-ranking/&title=A Neural Network Trick for Ranking Problems"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://henders.one/2022/06/10/margin-ranking/&name=A Neural Network Trick for Ranking Problems&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://henders.one/2022/06/10/margin-ranking/&t=A Neural Network Trick for Ranking Problems"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
