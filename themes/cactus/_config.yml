@@ -15,7 +15,7 @@ direction: ltr
 # languages/*.yml
 nav:
   home: /
-  Publications: /publications
+  Publications & Talks: /publications
   # Projects: https://github.com/rhsimplex/
   Blog Archives: /archives/
   Stats: https://counter.dev/dashboard.html?user=rhsimplex&token=I4C7xZmOptOztu7l
