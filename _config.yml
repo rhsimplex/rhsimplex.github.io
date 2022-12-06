@@ -7,9 +7,8 @@ title: Ryan Henderson
 subtitle: ''
 description: >
   Hi there!
-  My name is Ryan Henderson, and I'm a PhD-trained chemist living near Berlin, Germany.
-  I'm a machine learning research scientist working on biological/chemical problems.
-  I also have experience in backend development, numerical programming, explainable AI, and machine learning applied to other fields.
+  I'm a <a href="https://ecommons.cornell.edu/handle/1813/33790">PhD-trained</a> machine learning research scientist working on biological/chemical problems.
+  I also have experience in <a href="https://proceedings.mlr.press/v139/henderson21a.html">graph neural networks</a>, <a href="https://link.springer.com/article/10.1186/s13321-022-00600-z">explainable AI</a>, <a href="https://github.com/bigchaindb/bigchaindb">backend & blockchain development</a>, <a href="https://github.com/ProvenanceLabs/image-match">numerical programming & image processing</a>, and machine learning applied to other fields.
 
 
   See my <a href="/publications">publications</a> or blog posts for more info.
@@ -20,7 +19,7 @@ timezone: ''
 
 # URL
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
-url: https://rhsimplex.github.io/
+url: https://henders.one/
 permalink: :year/:month/:day/:title/
 permalink_defaults:
 pretty_urls:
