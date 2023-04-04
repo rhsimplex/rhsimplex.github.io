@@ -8,7 +8,10 @@ subtitle: ''
 description: >
   Hi there!
   I'm a <a href="https://ecommons.cornell.edu/handle/1813/33790">PhD-trained</a> machine learning research scientist working on biological/chemical problems.
-  I also have experience in <a href="https://proceedings.mlr.press/v139/henderson21a.html">graph neural networks</a>, <a href="https://link.springer.com/article/10.1186/s13321-022-00600-z">explainable AI</a>, <a href="https://github.com/bigchaindb/bigchaindb">backend & blockchain development</a>, <a href="https://github.com/ProvenanceLabs/image-match">numerical programming & image processing</a>, and machine learning applied to other fields.
+  I also have experience in <a href="https://proceedings.mlr.press/v139/henderson21a.html">graph neural networks</a>, <a href="https://link.springer.com/article/10.1186/s13321-022-00600-z">explainable AI</a>, <a href="https://github.com/bigchaindb/bigchaindb">backend & blockchain development</a>, <a href="https://github.com/rhsimplex/image-match">numerical programming & image processing</a>, and machine learning applied to other fields.
+
+
+  I've also earned <a href="2023/01/23/why-i-quit-numerai/">over $20,000</a> in ML competitions =)
 
 
   See my <a href="/publications">publications</a> or blog posts for more info.
