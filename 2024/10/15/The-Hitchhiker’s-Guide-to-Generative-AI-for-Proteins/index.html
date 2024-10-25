@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="This article was orginally written as a paid contribution to the Tribe AI Blog with the subtitle “For ML practitioners without biology or chemistry background.” I retain copyright.   Since Alphafold2">
+<meta property="og:type" content="article">
+<meta property="og:title" content="The Hitchhiker’s Guide to Generative AI for Proteins">
+<meta property="og:url" content="https://henders.one/2024/10/15/The-Hitchhiker%E2%80%99s-Guide-to-Generative-AI-for-Proteins/index.html">
+<meta property="og:site_name" content="Ryan Henderson">
+<meta property="og:description" content="This article was orginally written as a paid contribution to the Tribe AI Blog with the subtitle “For ML practitioners without biology or chemistry background.” I retain copyright.   Since Alphafold2">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://henders.one/images/hh_bio_splash.png">
+<meta property="og:image" content="https://henders.one/images/hh_bio_intro.png">
+<meta property="og:image" content="https://henders.one/images/hh_bio_pipeline.png">
+<meta property="og:image" content="https://henders.one/images/hh_bio_protein_cartoon.png">
+<meta property="og:image" content="https://henders.one/images/hh_bio_protein_sidechains.png">
+<meta property="og:image" content="https://henders.one/images/hh_bio_esm2.png">
+<meta property="og:image" content="https://henders.one/images/hh_bio_rfd.png">
+<meta property="og:image" content="https://henders.one/images/hh_bio_rfdaap.png">
+<meta property="article:published_time" content="2024-10-15T11:05:31.000Z">
+<meta property="article:modified_time" content="2024-10-25T13:27:12.734Z">
+<meta property="article:author" content="Ryan Henderson">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://henders.one/images/hh_bio_splash.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>The Hitchhiker’s Guide to Generative AI for Proteins</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/true" title="Ryan Henderson" type="application/atom+xml" />
+    
+	<!-- mathjax -->
+	
+<script src="https://cdn.counter.dev/script.js" data-id="ebfb67f0-1380-4a2e-8b35-a05b09b198a2" data-utcoffset="2"></script>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/publications">Publications &amp; Talks</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Blog Archives</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://counter.dev/dashboard.html?user=rhsimplex&token=I4C7xZmOptOztu7l">Stats</a></li><!--
+     --><!--
+       --><li><a href="/images/Ryan%20Henderson.pdf">CV (pdf)</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2023/01/23/why-i-quit-numerai/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://henders.one/2024/10/15/The-Hitchhiker%E2%80%99s-Guide-to-Generative-AI-for-Proteins/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://henders.one/2024/10/15/The-Hitchhiker%E2%80%99s-Guide-to-Generative-AI-for-Proteins/&text=The Hitchhiker’s Guide to Generative AI for Proteins"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://henders.one/2024/10/15/The-Hitchhiker%E2%80%99s-Guide-to-Generative-AI-for-Proteins/&title=The Hitchhiker’s Guide to Generative AI for Proteins"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://henders.one/2024/10/15/The-Hitchhiker%E2%80%99s-Guide-to-Generative-AI-for-Proteins/&is_video=false&description=The Hitchhiker’s Guide to Generative AI for Proteins"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=The Hitchhiker’s Guide to Generative AI for Proteins&body=Check out this article: https://henders.one/2024/10/15/The-Hitchhiker%E2%80%99s-Guide-to-Generative-AI-for-Proteins/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://henders.one/2024/10/15/The-Hitchhiker%E2%80%99s-Guide-to-Generative-AI-for-Proteins/&title=The Hitchhiker’s Guide to Generative AI for Proteins"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://henders.one/2024/10/15/The-Hitchhiker%E2%80%99s-Guide-to-Generative-AI-for-Proteins/&title=The Hitchhiker’s Guide to Generative AI for Proteins"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://henders.one/2024/10/15/The-Hitchhiker%E2%80%99s-Guide-to-Generative-AI-for-Proteins/&title=The Hitchhiker’s Guide to Generative AI for Proteins"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://henders.one/2024/10/15/The-Hitchhiker%E2%80%99s-Guide-to-Generative-AI-for-Proteins/&title=The Hitchhiker’s Guide to Generative AI for Proteins"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://henders.one/2024/10/15/The-Hitchhiker%E2%80%99s-Guide-to-Generative-AI-for-Proteins/&name=The Hitchhiker’s Guide to Generative AI for Proteins&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://henders.one/2024/10/15/The-Hitchhiker%E2%80%99s-Guide-to-Generative-AI-for-Proteins/&t=The Hitchhiker’s Guide to Generative AI for Proteins"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#What-are-we-trying-to-do"><span class="toc-number">1.</span> <span class="toc-text">What are we trying to do?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Does-it-work"><span class="toc-number">2.</span> <span class="toc-text">Does it work?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Sequence-and-Structural-models"><span class="toc-number">3.</span> <span class="toc-text">Sequence and Structural models</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ESM-2"><span class="toc-number">3.1.</span> <span class="toc-text">ESM-2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RFdiffusion"><span class="toc-number">3.2.</span> <span class="toc-text">RFdiffusion</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#A-realistic-example"><span class="toc-number">4.</span> <span class="toc-text">A realistic example</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Challenges"><span class="toc-number">5.</span> <span class="toc-text">Challenges</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Doing-better-than-nature"><span class="toc-number">5.1.</span> <span class="toc-text">Doing better than nature</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PDB-file-format"><span class="toc-number">5.2.</span> <span class="toc-text">PDB file format</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Specificity"><span class="toc-number">5.3.</span> <span class="toc-text">Specificity</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Working-with-scientists"><span class="toc-number">5.4.</span> <span class="toc-text">Working with scientists</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#The-biotech-industry"><span class="toc-number">5.5.</span> <span class="toc-text">The biotech industry</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Looking-forward"><span class="toc-number">6.</span> <span class="toc-text">Looking forward</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        The Hitchhiker’s Guide to Generative AI for Proteins
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Ryan Henderson</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2024-10-15T11:05:31.000Z" itemprop="datePublished">2024-10-15</time>
+        
+      
+    </div>
+
+
+      
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p><em>This article was orginally written as a paid contribution to the <a target="_blank" rel="noopener" href="https://www.tribe.ai/applied-ai/the-hitchhikers-guide-to-generative-ai-for-proteins">Tribe AI Blog</a> with the subtitle “For ML practitioners without biology or chemistry background.” I retain copyright.</em></p>
+<img src="/images/hh_bio_splash.png"/>
+
+<p>Since <a target="_blank" rel="noopener" href="https://github.com/google-deepmind/alphafold">Alphafold2</a> pushed machine learning into the biology spotlight, we’ve seen a flurry of activity around AI applied to structure and function of proteins. Following broad shifts in AI as a field, biologists are also creating purpose-built <a target="_blank" rel="noopener" href="https://github.com/RosettaCommons/RFdiffusion">diffusion</a> and <a target="_blank" rel="noopener" href="https://github.com/facebookresearch/esm">transformer</a> generative models. Instead of image and text, however, the medium is molecules and, increasingly, proteins. This short introduction to generative AI in a biological context is for the ML engineers getting started in the biological space with the desire–or perhaps mandate–to apply generative AI to biology problems.</p>
+<p>Entering this field as an outsider–even as an experienced ML engineer–can be bewildering. Getting generative models to do what you want can be hard at the best of times, but applying to proteins presents extra challenges. Biology is a jargon-laden field, even by general scientific standards. Bioinformatics tools can be as unwieldy and arcane as the formats and standards they operate on. Getting lab scientists to agree on a machine-optimizable target can be tricky. Even routine experiments are <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Replication_crisis#Across_fields">notoriously hard to reproduce</a> which makes ML pipeline iteration harrowing. And finally, while any lay person can sanity check the output of a text or image model, even protein experts might have to put in a bit of effort to distinguish plausible outputs from noise.</p>
+<p>To help orient you, this guide will give you just enough grounding to:</p>
+<ul>
+<li><strong>Grasp what a realistic task looks like</strong></li>
+<li><strong>Know what kind of model performance to expect</strong></li>
+<li><strong>Have a broad overview of the main models in use (<a target="_blank" rel="noopener" href="https://github.com/facebookresearch/esm">ESM-2</a> and <a target="_blank" rel="noopener" href="https://github.com/RosettaCommons/RFdiffusion">RFdiffusion</a>), and</strong></li>
+<li><strong>Avoid some common pitfalls.</strong></li>
+</ul>
+<p>For the scientific side, I won’t assume anything more than a grade school understanding of chemistry–essentially, you need to already have an idea what a molecule is. Therefore, this guide will <strong>NOT</strong>:</p>
+<ul>
+<li><strong>Help you find what kind of problems to solve.</strong> You will have to consult your expert colleagues.</li>
+<li><strong>Teach you bioinformatics.</strong> <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Bioinformatics">Bioinformatics</a> is manipulating biological data with a computer–for our purposes protein structures and sequences. This is a necessary and difficult skill to learn if you want to move beyond just running models with default settings on public databases. Fortunately, bioinformatics is a mature field and <a target="_blank" rel="noopener" href="https://www.biostarhandbook.com/">comprehensive tutorials exist</a>.</li>
+<li><strong>Exhaustively cover the literature.</strong> This is a big and fast-moving research area, but I’m just trying to help you get your bearings from an ML technical standpoint. If you want to delve into the research, consider this <a target="_blank" rel="noopener" href="https://www.cell.com/trends/pharmacological-sciences/fulltext/S0165-6147(24)00003-8">review</a> or this <a target="_blank" rel="noopener" href="https://www.sciencedirect.com/science/article/pii/S0959440X24000216">review</a></li>
+<li><strong>Teach you biology.</strong> Sorry about that! I will try to give you just enough understanding of what a protein sequence and structure are to understand what the models are trying to do. Consider the beautiful <a target="_blank" rel="noopener" href="https://ccsb.scripps.edu/goodsell/machinery-of-life/">Machinery of Life</a> to ignite a sense of wonder at the possibilities.</li>
+</ul>
+<figure>
+  <img src="/images/hh_bio_intro.png"/>
+  <figcaption style="text-align: center"><em>When writing an article about generative AI I’m legally obliged to provide an AI-generated image</em></figcaption>
+</figure>
+
+<h2 id="What-are-we-trying-to-do"><a href="#What-are-we-trying-to-do" class="headerlink" title="What are we trying to do?"></a>What are we trying to do?</h2><p>Some examples from recent literature:</p>
+<ul>
+<li><strong><a target="_blank" rel="noopener" href="https://pubs.acs.org/doi/full/10.1021/acscatal.3c02746">Designing Efficient Enzymes</a></strong> An <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Enzyme">enzyme</a> is a protein that can accelerate chemical processes. Making better ones can have huge economic or therapeutic impact.</li>
+<li><strong><a target="_blank" rel="noopener" href="https://academic.oup.com/bib/article/25/4/bbae307/7705535?login=false">Designing new antibodies</a></strong> An <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Antibody">antibody</a> is an instrumental protein for the immune system, and designing new ones in new contexts can enhance existing medicine or create entirely new treatments.</li>
+<li><strong><a target="_blank" rel="noopener" href="https://www.biorxiv.org/content/10.1101/2024.09.17.613523v1">Managing fungal disease in plants</a></strong> Obvious agricultural implications.</li>
+</ul>
+<p>However, documented applications of generative AI for proteins, let alone with experimental verification, are rare in the literature. To quote the <a target="_blank" rel="noopener" href="https://www.biorxiv.org/content/10.1101/2024.09.17.613523v1">fungal disease paper</a>:</p>
+<blockquote>
+<p>Despite its very strong results in protein binder design, RFdiffusion has been used in relatively few published studies at the time of this publication [Sept. 19, 2024]. Thus, there is limited information regarding best practices to use RFdiffusion…</p>
+</blockquote>
+<p>This isn’t really a strike against RFdiffusion – it probably just means most work is being done commercially on proprietary or secret targets. After all, setting up a tightly-coupled team to implement state-of-the-art generative AI <strong>and</strong> do state-of-the-art laboratory experiments is not easy.</p>
+<p>This is also an opportunity. Many articles, such as the enzyme and antibody papers above, are citing generative AI techniques aspirationally. That is, the authors already have pipelines to generate proteins but expect more advanced ML techniques could improve them. As someone breaking into the field, an exercise for you could be to take one of these papers with code available and try to add one of the models we discuss below.</p>
+<h2 id="Does-it-work"><a href="#Does-it-work" class="headerlink" title="Does it work?"></a>Does it work?</h2><p>Yes, but it’s a numbers game.  Using state-of-the-art techniques, you can expect about 1 in 1,000 - 10,000 generated proteins to be good candidates for lab testing. This order of magnitude matches what I’ve seen in the literature and my experience.</p>
+<p>Although the examples above are not all pharmaceutical, when thinking about how to incorporate a computational effort into a discovery campaign it’s helpful to understand the drug discovery “pipeline.”</p>
+<figure>
+  <img src="/images/hh_bio_pipeline.png"/>
+  <figcaption style="text-align: center"><em>From <a href=https://www.sciencedirect.com/science/article/pii/S2211383522000521>Why 90% of clinical drug development fails and how to improve it?</a> reproduced under <a href=https://creativecommons.org/licenses/by-nc-nd/4.0/>CC BY-NC-ND 4.0</a></em></figcaption>
+</figure>
+
+<p>Every step serves to narrow down the possible molecules&#x2F;protein sequences&#x2F;whatevers with increasingly discerning but correspondingly more expensive lab experiments or trials. The goal of any ML model, generative or otherwise, or indeed any computational effort is to replace or narrow the scope of expensive and time-consuming lab experiments and find promising proteins or molecules more quickly. This applies whether you’re searching for new drugs or new enzymes.</p>
+<p>Understanding where your generative AI effort fits into your pipeline is crucial. In particular, understanding what kind of lab experiment will be used on your result should inform your strategy: can your lab reasonably test 100 sequences or 10,000? If it’s only 100, you need to be a lot more sure about your generated results.</p>
+<p>Unfortunately, generative models so far available are not well-suited to generating protein sequences with specific properties by themselves. They are great at generating plausible sequences and structures, but unlike image and NLP models, it can be difficult to evaluate whether it’s junk or not. We’ll discuss some ways to deal with this below.</p>
+<h2 id="Sequence-and-Structural-models"><a href="#Sequence-and-Structural-models" class="headerlink" title="Sequence and Structural models"></a>Sequence and Structural models</h2><p>First an <em>extreme</em> crash-course on protein basics, with apologies to any biologists reading.</p>
+<p>For our purposes, a protein is a chain of amino acids. Amino acids are small molecules, which when linked together in a chain, form a protein. The order of the amino acids is the protein <strong>sequence</strong>, and the 3D arrangement of the atoms in the linked amino acids is the <strong>structure</strong>.  The sequence is usually recorded as a string of capital letters.</p>
+<figure>
+  <img src="/images/hh_bio_protein_cartoon.png"/>
+  <img src="/images/hh_bio_protein_sidechains.png"/>
+  <figcaption style="text-align: center"><em>Two representations of the <a href=https://www.rcsb.org/structure/8gvn>anti-microbial short protein</a> with sequence <b>WLRRIKAWLRRIKA</b>. The top image is the common cartoon representation you may have seen before: a ribbon, coil, or string. The bottom image superimposes the full molecular structure. As you can see, the cartoon on top hides a lot of complexity for the sake of interpretability. This image was generated with <a href=https://github.com/schrodinger/pymol-open-source?tab=readme-ov-file>PyMOL</a>, a highly-recommended open-source protein and molecule visualization tool.</em></figcaption>
+</figure>
+
+<p>Each amino acid may also have flexible or free-moving parts called <strong>side chains</strong>, which are all of the stuff sticking off the ribbon in the figure above. These side chains are usually crucial for determining the kinds of interesting properties you will be looking for.</p>
+<p>Obtaining the structure of a protein is much harder than obtaining its sequence. There are many, many more determined sequences than structures: at least several orders of magnitude more. So while the sequence alone hides a lot of information, the sheer volume of sequence data cannot be ignored.</p>
+<p>Accordingly, there are two families of generative protein models: sequence and structural.  Sequence models will be very familiar to ML practitioners as these are transformer models with amino acids as tokens, which take advantage of the huge amount of sequence data available. Structural models work on the 3D atomic structure of the protein.</p>
+<p>Despite the relative shortage of structural data, the field seems to be eschewing sequence models in favor of more powerful structural models.</p>
+<h3 id="ESM-2"><a href="#ESM-2" class="headerlink" title="ESM-2"></a>ESM-2</h3><p><a target="_blank" rel="noopener" href="https://huggingface.co/docs/transformers/en/model_doc/esm">ESM-2</a> is a transformer model developed at Facebook. Initially used only for protein sequence generation, it was later <a target="_blank" rel="noopener" href="https://www.science.org/doi/10.1126/science.ade2574">expanded to 3D structure modeling</a>. Conceptually this is very similar to BERT or GPT style training. A corpus of protein sequences, with amino acids as tokens, is trained autoregressively to predict missing parts of the sequence.</p>
+<figure>
+  <img src="/images/hh_bio_esm2.png"/>
+  <figcaption style="text-align: center"><em>Basic overview of ESM-2 training. The attention map can be extracted to predict structure.  <a href=https://www.biorxiv.org/content/10.1101/2020.12.15.422761v1>From Transformer protein language models are unsupervised structure learners</a> reproduced under <a href=https://creativecommons.org/licenses/by-nc-nd/4.0/>CC BY-NC-ND 4.0</a></em></figcaption>
+</figure>
+
+<p>Although ESM-2 can predict structure, in my experience it’s used primarily to create embeddings for downstream tasks or clustering rather than direct sequence or structure generation. However, fast inference means this remains an important part of the toolkit.</p>
+<h3 id="RFdiffusion"><a href="#RFdiffusion" class="headerlink" title="RFdiffusion"></a>RFdiffusion</h3><p>The current standard generative model for protein structure generation is RFdiffusion, or rather RFdiffusion plus ProteinMPNN. RFDiffusion, as the name suggests, is a diffusion model that noises and denoises a protein backbone to come up with a new structure.  What is a backbone? Simply put, generating the chain without specifying the amino acids. Afterwards, a separate model called <a target="_blank" rel="noopener" href="https://github.com/dauparas/ProteinMPNN">ProteinMPNN</a> generates the missing sequence. This pipeline can generate entirely new proteins or parts of existing proteins.</p>
+<figure>
+  <img src="/images/hh_bio_rfd.png"/>
+  <figcaption style="text-align: center"><em>Diffusion models for proteins, from <a href=https://www.nature.com/articles/s41586-023-06415-8>De novo design of protein structure and function with RFdiffusion</a> reproduced under <a href=https://creativecommons.org/licenses/by/4.0/>CC BY 4.0</a></em></figcaption>
+</figure>
+
+<p>Selecting which generated structures&#x2F;sequences to use can be a challenge. The RFDiffusion authors suggest running a structural model from the generated sequence (in their case, Alphafold2) and seeing how closely it aligns with the RFDiffusion+ProteinMPNN generated structure. The rationale being that if the two models are in agreement, the structure is more likely valid. This makes intuitive sense and indeed seems to work well for filtering out “bad” structures, but not so great for picking unusually good ones. Scoring the generated structures against AF2 has the added disadvantage of adding another expensive step to an already computationally heavy pipeline.</p>
+<h2 id="A-realistic-example"><a href="#A-realistic-example" class="headerlink" title="A realistic example"></a>A realistic example</h2><figure>
+  <img src="/images/hh_bio_rfdaap.png"/>
+  <figcaption style="text-align: center"><em>Helix binder design strategy from <a href=https://www.nature.com/articles/s41586-023-06953-1>De novo design of high-affinity binders of bioactive helical peptides</a> reproduced under <a href=https://creativecommons.org/licenses/by/4.0/>CC BY 4.0</a></em></figcaption>
+</figure>
+
+<p>In the paper <a target="_blank" rel="noopener" href="https://www.nature.com/articles/s41586-023-06953-1">De novo design of high-affinity binders of bioactive helical peptides</a>, the authors use an RFdiffusion pipeline to generate binders to a particular kind of hormone. This paper is worth reading because it comes from the same group that built RFdiffusion and describes a realistic ML + experiment setup. Some highlights:</p>
+<ul>
+<li><strong>Start with pre-designed structures</strong> While most protein generative models do a template search of some kind, sometimes you’re better off just generating unoptimized structures with a non-ML program that are near to what you expect. These can be used as a starting point for diffusion. In this work–see the first two subsections under “Computational Methods”–a scaffold library is generated to be used as a base for the generative model, and RFdiffusion’s “partial diffusion” mode is used to generate plausible binders from this starting point.</li>
+<li><strong>Carry out multiple rounds</strong> However you inspect the results of your generative models, these results can be used as the inputs to another generative round. See “Sequence threading to generate peptide binders” under Computational methods.</li>
+<li><strong>Combine with other models</strong> In this case AF2 for structure verification and AF2 Hallucination to enhance binding.</li>
+</ul>
+<p>The authors also kindly give numbers of structures they generate at each step: e.g. “2,000 partially diffused designs were generated for each target,” which gives you a sense of scale for the computational experiment.</p>
+<h2 id="Challenges"><a href="#Challenges" class="headerlink" title="Challenges"></a>Challenges</h2><h3 id="Doing-better-than-nature"><a href="#Doing-better-than-nature" class="headerlink" title="Doing better than nature"></a>Doing better than nature</h3><p>While generative models like RFDiffusion are astonishing, they have a tendency to generate plausible alternatives that are “as good” as a naturally occurring protein for your desired property or function. While this might be sufficient for some applications, often we are trying to do better. In this case you might need to filter or rank your generated structures according to some other simulation or model. Fine-tuning also comes to mind, but be careful not to reach for a risky ML solution when a computational biology solution might already exist.</p>
+<h3 id="PDB-file-format"><a href="#PDB-file-format" class="headerlink" title="PDB file format"></a>PDB file format</h3><p>The standard format for storing protein structures digitally is the Protein Data Bank (PDB) format. It was first designed in the 70s and is showing its age despite updates. Be aware that many programs will save PDBs with only partial adherence to the standard. For working with PDBs, I suggest <a target="_blank" rel="noopener" href="https://github.com/schrodinger/pymol-open-source">PyMOL</a> for visualization and the <a target="_blank" rel="noopener" href="https://biopython.org/">biopython</a> suite for processing them in your pipeline. Fortunately, most groups which release new models also include an example data pipeline, though you will often still need to fill in gaps.</p>
+<h3 id="Specificity"><a href="#Specificity" class="headerlink" title="Specificity"></a>Specificity</h3><p>Especially in therapeutic use cases, generating a promising new protein is not enough. You have to worry about how it interacts with other proteins and molecules that it might encounter. Simply put: a cancer-killing treatment is less useful if it also is patient-killing. Try to understand if this could be an issue in your problem space.</p>
+<h3 id="Working-with-scientists"><a href="#Working-with-scientists" class="headerlink" title="Working with scientists"></a>Working with scientists</h3><p>I’m a scientist myself, but this can still be frustrating. They will treat generative AI like the result of a simulation even though intellectually they understand the difference. They’re also famously skeptical, so be prepared for pushback no matter how good the results.</p>
+<h3 id="The-biotech-industry"><a href="#The-biotech-industry" class="headerlink" title="The biotech industry"></a>The biotech industry</h3><p>It’s really secretive. This will be a challenge especially if you have to work with groups outside of your organization.</p>
+<h2 id="Looking-forward"><a href="#Looking-forward" class="headerlink" title="Looking forward"></a>Looking forward</h2><p>As we discussed above, the biggest outstanding problem for generative AI in biology is getting generated proteins to have specific properties. New models promise to push generated structures to do just that: <a target="_blank" rel="noopener" href="https://alphafoldserver.com/about">AlphaFold3</a> and <a target="_blank" rel="noopener" href="https://github.com/evolutionaryscale/esm">ESM-3</a>. However both have restrictive (non-commercial) licenses, and for AlphaFold3, the code is not even available. As such, I can’t really recommend them yet.</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/publications">Publications &amp; Talks</a></li>
+         
+          <li><a href="/archives/">Blog Archives</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://counter.dev/dashboard.html?user=rhsimplex&token=I4C7xZmOptOztu7l">Stats</a></li>
+         
+          <li><a href="/images/Ryan%20Henderson.pdf">CV (pdf)</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#What-are-we-trying-to-do"><span class="toc-number">1.</span> <span class="toc-text">What are we trying to do?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Does-it-work"><span class="toc-number">2.</span> <span class="toc-text">Does it work?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Sequence-and-Structural-models"><span class="toc-number">3.</span> <span class="toc-text">Sequence and Structural models</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ESM-2"><span class="toc-number">3.1.</span> <span class="toc-text">ESM-2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RFdiffusion"><span class="toc-number">3.2.</span> <span class="toc-text">RFdiffusion</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#A-realistic-example"><span class="toc-number">4.</span> <span class="toc-text">A realistic example</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Challenges"><span class="toc-number">5.</span> <span class="toc-text">Challenges</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Doing-better-than-nature"><span class="toc-number">5.1.</span> <span class="toc-text">Doing better than nature</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PDB-file-format"><span class="toc-number">5.2.</span> <span class="toc-text">PDB file format</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Specificity"><span class="toc-number">5.3.</span> <span class="toc-text">Specificity</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Working-with-scientists"><span class="toc-number">5.4.</span> <span class="toc-text">Working with scientists</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#The-biotech-industry"><span class="toc-number">5.5.</span> <span class="toc-text">The biotech industry</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Looking-forward"><span class="toc-number">6.</span> <span class="toc-text">Looking forward</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://henders.one/2024/10/15/The-Hitchhiker%E2%80%99s-Guide-to-Generative-AI-for-Proteins/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://henders.one/2024/10/15/The-Hitchhiker%E2%80%99s-Guide-to-Generative-AI-for-Proteins/&text=The Hitchhiker’s Guide to Generative AI for Proteins"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://henders.one/2024/10/15/The-Hitchhiker%E2%80%99s-Guide-to-Generative-AI-for-Proteins/&title=The Hitchhiker’s Guide to Generative AI for Proteins"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://henders.one/2024/10/15/The-Hitchhiker%E2%80%99s-Guide-to-Generative-AI-for-Proteins/&is_video=false&description=The Hitchhiker’s Guide to Generative AI for Proteins"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=The Hitchhiker’s Guide to Generative AI for Proteins&body=Check out this article: https://henders.one/2024/10/15/The-Hitchhiker%E2%80%99s-Guide-to-Generative-AI-for-Proteins/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://henders.one/2024/10/15/The-Hitchhiker%E2%80%99s-Guide-to-Generative-AI-for-Proteins/&title=The Hitchhiker’s Guide to Generative AI for Proteins"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://henders.one/2024/10/15/The-Hitchhiker%E2%80%99s-Guide-to-Generative-AI-for-Proteins/&title=The Hitchhiker’s Guide to Generative AI for Proteins"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://henders.one/2024/10/15/The-Hitchhiker%E2%80%99s-Guide-to-Generative-AI-for-Proteins/&title=The Hitchhiker’s Guide to Generative AI for Proteins"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://henders.one/2024/10/15/The-Hitchhiker%E2%80%99s-Guide-to-Generative-AI-for-Proteins/&title=The Hitchhiker’s Guide to Generative AI for Proteins"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://henders.one/2024/10/15/The-Hitchhiker%E2%80%99s-Guide-to-Generative-AI-for-Proteins/&name=The Hitchhiker’s Guide to Generative AI for Proteins&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://henders.one/2024/10/15/The-Hitchhiker%E2%80%99s-Guide-to-Generative-AI-for-Proteins/&t=The Hitchhiker’s Guide to Generative AI for Proteins"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2022-2024
+    Ryan Henderson
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/publications">Publications &amp; Talks</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Blog Archives</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://counter.dev/dashboard.html?user=rhsimplex&token=I4C7xZmOptOztu7l">Stats</a></li><!--
+     --><!--
+       --><li><a href="/images/Ryan%20Henderson.pdf">CV (pdf)</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
