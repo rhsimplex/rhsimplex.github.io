@@ -3,7 +3,10 @@ title: The Hitchhiker’s Guide to Generative AI for Proteins
 date: 2024-10-15 11:05:31
 tags:
 ---
-# A guide for ML practitioners without biology or chemistry background
+
+*This article was orginally written as a paid contribution to the [Tribe AI Blog](https://www.tribe.ai/applied-ai/the-hitchhikers-guide-to-generative-ai-for-proteins) with the subtitle "For ML practitioners without biology or chemistry background." I retain copyright.*
+
+<img src="/images/hh_bio_splash.png"/>
 
 Since [Alphafold2](https://github.com/google-deepmind/alphafold) pushed machine learning into the biology spotlight, we’ve seen a flurry of activity around AI applied to structure and function of proteins. Following broad shifts in AI as a field, biologists are also creating purpose-built [diffusion](https://github.com/RosettaCommons/RFdiffusion) and [transformer](https://github.com/facebookresearch/esm) generative models. Instead of image and text, however, the medium is molecules and, increasingly, proteins. This short introduction to generative AI in a biological context is for the ML engineers getting started in the biological space with the desire–or perhaps mandate–to apply generative AI to biology problems.
 
@@ -20,6 +23,11 @@ For the scientific side, I won’t assume anything more than a grade school unde
 * **Teach you bioinformatics.** [Bioinformatics](https://en.wikipedia.org/wiki/Bioinformatics) is manipulating biological data with a computer–for our purposes protein structures and sequences. This is a necessary and difficult skill to learn if you want to move beyond just running models with default settings on public databases. Fortunately, bioinformatics is a mature field and [comprehensive tutorials exist](https://www.biostarhandbook.com).
 * **Exhaustively cover the literature.** This is a big and fast-moving research area, but I’m just trying to help you get your bearings from an ML technical standpoint. If you want to delve into the research, consider this [review](https://www.cell.com/trends/pharmacological-sciences/fulltext/S0165-6147(24)00003-8) or this [review](https://www.sciencedirect.com/science/article/pii/S0959440X24000216)
 * **Teach you biology.** Sorry about that! I will try to give you just enough understanding of what a protein sequence and structure are to understand what the models are trying to do. Consider the beautiful [Machinery of Life](https://ccsb.scripps.edu/goodsell/machinery-of-life/) to ignite a sense of wonder at the possibilities.
+
+<figure>
+  <img src="/images/hh_bio_intro.png"/>
+  <figcaption style="text-align: center"><em>When writing an article about generative AI I’m legally obliged to provide an AI-generated image</em></figcaption>
+</figure>
 
 ## What are we trying to do?
 
@@ -41,6 +49,11 @@ Yes, but it’s a numbers game.  Using state-of-the-art techniques, you can expe
 
 Although the examples above are not all pharmaceutical, when thinking about how to incorporate a computational effort into a discovery campaign it’s helpful to understand the drug discovery “pipeline.”
 
+<figure>
+  <img src="/images/hh_bio_pipeline.png"/>
+  <figcaption style="text-align: center"><em>From <a href=https://www.sciencedirect.com/science/article/pii/S2211383522000521>Why 90% of clinical drug development fails and how to improve it?</a> reproduced under <a href=https://creativecommons.org/licenses/by-nc-nd/4.0/>CC BY-NC-ND 4.0</a></em></figcaption>
+</figure>
+
 Every step serves to narrow down the possible molecules/protein sequences/whatevers with increasingly discerning but correspondingly more expensive lab experiments or trials. The goal of any ML model, generative or otherwise, or indeed any computational effort is to replace or narrow the scope of expensive and time-consuming lab experiments and find promising proteins or molecules more quickly. This applies whether you’re searching for new drugs or new enzymes.
 
 Understanding where your generative AI effort fits into your pipeline is crucial. In particular, understanding what kind of lab experiment will be used on your result should inform your strategy: can your lab reasonably test 100 sequences or 10,000? If it’s only 100, you need to be a lot more sure about your generated results.
@@ -52,6 +65,12 @@ Unfortunately, generative models so far available are not well-suited to generat
 First an *extreme* crash-course on protein basics, with apologies to any biologists reading.
 
 For our purposes, a protein is a chain of amino acids. Amino acids are small molecules, which when linked together in a chain, form a protein. The order of the amino acids is the protein **sequence**, and the 3D arrangement of the atoms in the linked amino acids is the **structure**.  The sequence is usually recorded as a string of capital letters.
+
+<figure>
+  <img src="/images/hh_bio_protein_cartoon.png"/>
+  <img src="/images/hh_bio_protein_sidechains.png"/>
+  <figcaption style="text-align: center"><em>Two representations of the <a href=https://www.rcsb.org/structure/8gvn>anti-microbial short protein</a> with sequence <b>WLRRIKAWLRRIKA</b>. The top image is the common cartoon representation you may have seen before: a ribbon, coil, or string. The bottom image superimposes the full molecular structure. As you can see, the cartoon on top hides a lot of complexity for the sake of interpretability. This image was generated with <a href=https://github.com/schrodinger/pymol-open-source?tab=readme-ov-file>PyMOL</a>, a highly-recommended open-source protein and molecule visualization tool.</em></figcaption>
+</figure>
 
 Each amino acid may also have flexible or free-moving parts called **side chains**, which are all of the stuff sticking off the ribbon in the figure above. These side chains are usually crucial for determining the kinds of interesting properties you will be looking for.
 
@@ -65,15 +84,30 @@ Despite the relative shortage of structural data, the field seems to be eschewin
 
 [ESM-2](https://huggingface.co/docs/transformers/en/model_doc/esm) is a transformer model developed at Facebook. Initially used only for protein sequence generation, it was later [expanded to 3D structure modeling](https://www.science.org/doi/10.1126/science.ade2574). Conceptually this is very similar to BERT or GPT style training. A corpus of protein sequences, with amino acids as tokens, is trained autoregressively to predict missing parts of the sequence.
 
+<figure>
+  <img src="/images/hh_bio_esm2.png"/>
+  <figcaption style="text-align: center"><em>Basic overview of ESM-2 training. The attention map can be extracted to predict structure.  <a href=https://www.biorxiv.org/content/10.1101/2020.12.15.422761v1>From Transformer protein language models are unsupervised structure learners</a> reproduced under <a href=https://creativecommons.org/licenses/by-nc-nd/4.0/>CC BY-NC-ND 4.0</a></em></figcaption>
+</figure>
+
 Although ESM-2 can predict structure, in my experience it’s used primarily to create embeddings for downstream tasks or clustering rather than direct sequence or structure generation. However, fast inference means this remains an important part of the toolkit.
 
 ### RFdiffusion
 
 The current standard generative model for protein structure generation is RFdiffusion, or rather RFdiffusion plus ProteinMPNN. RFDiffusion, as the name suggests, is a diffusion model that noises and denoises a protein backbone to come up with a new structure.  What is a backbone? Simply put, generating the chain without specifying the amino acids. Afterwards, a separate model called [ProteinMPNN](https://github.com/dauparas/ProteinMPNN) generates the missing sequence. This pipeline can generate entirely new proteins or parts of existing proteins.
 
+<figure>
+  <img src="/images/hh_bio_rfd.png"/>
+  <figcaption style="text-align: center"><em>Diffusion models for proteins, from <a href=https://www.nature.com/articles/s41586-023-06415-8>De novo design of protein structure and function with RFdiffusion</a> reproduced under <a href=https://creativecommons.org/licenses/by/4.0/>CC BY 4.0</a></em></figcaption>
+</figure>
+
 Selecting which generated structures/sequences to use can be a challenge. The RFDiffusion authors suggest running a structural model from the generated sequence (in their case, Alphafold2) and seeing how closely it aligns with the RFDiffusion+ProteinMPNN generated structure. The rationale being that if the two models are in agreement, the structure is more likely valid. This makes intuitive sense and indeed seems to work well for filtering out “bad” structures, but not so great for picking unusually good ones. Scoring the generated structures against AF2 has the added disadvantage of adding another expensive step to an already computationally heavy pipeline.
 
 ## A realistic example
+
+<figure>
+  <img src="/images/hh_bio_rfdaap.png"/>
+  <figcaption style="text-align: center"><em>Helix binder design strategy from <a href=https://www.nature.com/articles/s41586-023-06953-1>De novo design of high-affinity binders of bioactive helical peptides</a> reproduced under <a href=https://creativecommons.org/licenses/by/4.0/>CC BY 4.0</a></em></figcaption>
+</figure>
 
 In the paper [De novo design of high-affinity binders of bioactive helical peptides](https://www.nature.com/articles/s41586-023-06953-1), the authors use an RFdiffusion pipeline to generate binders to a particular kind of hormone. This paper is worth reading because it comes from the same group that built RFdiffusion and describes a realistic ML + experiment setup. Some highlights:
 * **Start with pre-designed structures** While most protein generative models do a template search of some kind, sometimes you’re better off just generating unoptimized structures with a non-ML program that are near to what you expect. These can be used as a starting point for diffusion. In this work–see the first two subsections under “Computational Methods”--a scaffold library is generated to be used as a base for the generative model, and RFdiffusion’s “partial diffusion” mode is used to generate plausible binders from this starting point.
